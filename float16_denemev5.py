@@ -178,7 +178,7 @@ def main():
             cv2.putText(vis, "No object!", (10,50),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
 
-        cv2.imshow("SAMURAI TRT Demo", vis)
+        cv2.imshow("KILIC TRT Demo", vis)
         if cv2.waitKey(1) & 0xFF == 27: break
 
         if csv_writer:
