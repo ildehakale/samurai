@@ -146,8 +146,12 @@ def main():
 
     # -------------------------------------------------------------------
     # 6) Takip döngüsü ve görselleştirme
-    loop_start = time.time()
+    prev_time = time.time()
+    loop_start = prev_time
+
+
     frame_count = 1
+
     csv_file = open(args.csv, "w", newline="") if args.csv else None
     csv_writer = csv.writer(csv_file) if csv_file else None
 
@@ -178,6 +182,11 @@ def main():
             cv2.putText(vis, "No object!", (10,50),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
 
+        curr_time = time.time()
+        fps_inst = 1.0 / (curr_time - prev_time)
+        prev_time = curr_time
+        cv2.putText(vis, f"FPS: {fps_inst:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
+        
         cv2.imshow("KILIC TRT Demo", vis)
         if cv2.waitKey(1) & 0xFF == 27: break
 
@@ -185,6 +194,7 @@ def main():
             t = time.time() - loop_start
             fps = frame_count / t if t>0 else 0.0
             csv_writer.writerow([frame_count, fps])
+
 
     cap.release()
     cv2.destroyAllWindows()
